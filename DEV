@@ -1,0 +1,10 @@
+This is my Development Environment for 'Educations'!
+
+  - JDK 1.8.0_161 (64bit)
+    (References for Java Spec : Java Community Process, Java Specification Requests)
+    
+  - Apache Tomcat 8.5.30
+    (for Servlet Spec : 3.1, JSP Spec : 2.3, WebSocket Spec : 1.1)
+  
+  - Eclipse IDE for Java EE Developers (eclipse-jee-oxygen-3a-win32-x86_64)
+  

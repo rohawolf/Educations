@@ -2,5 +2,5 @@
 the projects what I learned
 
 
-  ● JSP ->  EL, JSTL..
+  ● JSP ->  EL, JSTL..  
   ● practice, practice..

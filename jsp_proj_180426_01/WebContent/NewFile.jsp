@@ -3,7 +3,7 @@
     		
 <!DOCTYPE html>
 
-<html lang="ko-kr">
+<html lang="ko">
 	<head>
 		<meta charset="UTF-8">
 		<title>demo</title>

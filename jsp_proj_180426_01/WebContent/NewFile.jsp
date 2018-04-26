@@ -7,9 +7,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>demo</title>
-	</head>
-		
+	</head>		
 	<body>
-		abcd한글
+		abcd한글12345
+		hello! JSP!
 	</body>	
 </html>

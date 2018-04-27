@@ -58,17 +58,20 @@ public class DemoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
+	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println(" Service() ");
+		doGet(request, response);
 	}
-
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println(" doGet() ");
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

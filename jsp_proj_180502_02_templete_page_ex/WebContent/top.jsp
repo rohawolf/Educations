@@ -29,10 +29,10 @@ IsThreadSafe					true			define whether this page is thread safe or not
 	</head>	
 	<body>
 		<div>
-			<p align = "right">
-				<a	href	=	"login.jsp">Log-in</a>
-				<a	href	=	"join.jsp">Join</a>
-			</p>					
+			<ul>
+				<li><a	href	=	"login.jsp">Log-in</a>
+				<li><a	href	=	"join.jsp">Join</a>
+			</ul>							
 		</div>		
 	</body>	
 </html>

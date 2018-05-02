@@ -31,14 +31,14 @@ IsThreadSafe					true			define whether this page is thread safe or not
 	<head>
 		<meta charset="UTF-8">
 		<title>Templete Test</title>
-		<style type="text/css">
+		<style type="text/css">						
 			#header, #footer {
 				width : 100%;
-				height: 100px;							
+				height: 125px;							
 			}
-			#header > p {
-				padding : 0 100px 0 0;
-			}			
+			#header li {
+				display : inline;
+			}						
 			#content {
 				padding : 0 100px 0 100px;
 				height : 600px;
@@ -46,6 +46,9 @@ IsThreadSafe					true			define whether this page is thread safe or not
 			}
 			#left {
 				width : 20%;				
+			}
+			#left li {
+				display : block;
 			}
 			#center {
 				width : 80%;

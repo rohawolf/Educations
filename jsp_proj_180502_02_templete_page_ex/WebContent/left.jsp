@@ -29,8 +29,10 @@ IsThreadSafe					true			define whether this page is thread safe or not
 	</head>	
 	<body>
 		<div>
-			<a	href	=	"./template.jsp?page=newitem">New Item</a><br />
-			<a	href	=	"./template.jsp?page=bestitem">Best Item</a><br />
+			<ul>
+				<li><a	href	=	"./template.jsp?page=newitem">New Item</a>
+				<li><a	href	=	"./template.jsp?page=bestitem">Best Item</a>
+			</ul>			
 		</div>		
 	</body>	
 </html>

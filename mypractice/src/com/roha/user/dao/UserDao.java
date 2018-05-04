@@ -16,8 +16,7 @@ import com.roha.user.domain.User;
  *
  */
 public class UserDao {
-	
-	public void add(User user) throws ClassNotFoundException, SQLException {
+	private Connection getConnection() throws ClassNotFoundException, SQLException {
 		// Driver properties for DB Connection
 		final String driver = "oracle.jdbc.OracleDriver";
 		final String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -26,7 +25,10 @@ public class UserDao {
 		
 		Class.forName(driver);
 		Connection c = DriverManager.getConnection(url, DBid, DBpw);
-		
+		return c;
+	}
+	public void add(User user) throws ClassNotFoundException, SQLException {		
+		Connection c = getConnection();
 		PreparedStatement ps = c.prepareStatement(
 			"INSERT INTO users(id, name, password) VALUES(?, ?, ?)");
 		ps.setString(1, user.getId());
@@ -39,16 +41,8 @@ public class UserDao {
 		c.close();
 	}
 	
-	public User get(String id) throws ClassNotFoundException, SQLException {
-		// Driver properties for DB Connection
-		final String driver = "oracle.jdbc.OracleDriver";
-		final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		final String DBid = "roha";
-		final String DBpw = "roha";
-		
-		Class.forName(driver);
-		Connection c = DriverManager.getConnection(url, DBid, DBpw);
-		
+	public User get(String id) throws ClassNotFoundException, SQLException {		
+		Connection c = getConnection();	
 		PreparedStatement ps = c.prepareStatement(
 			"SELECT * FROM users WHERE id = ?");
 		ps.setString(1, id);
@@ -76,12 +70,12 @@ public class UserDao {
 		user.setPassword("roharoha");
 		
 		dao.add(user);		
-		System.out.println(user.getId() + "add success");
+		System.out.println(user.getId() + " add success");
 		
 		User user2 = dao.get(user.getId());
 		System.out.println(user2.getName());
 		System.out.println(user2.getPassword());
-		System.out.println(user2.getId() + "select success");
+		System.out.println(user2.getId() + " select success");
 	}
 	
 }

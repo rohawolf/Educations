@@ -8,27 +8,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * ex)
- * getConnection() implementation of 'N' company
+ * separated DB connection class
  * @author Roha Park
  *
  */
-public class NUserDao extends UserDao {
-	
-	@Override
-	public Connection getConnection() throws ClassNotFoundException, SQLException {
+public class SimpleConnectionMaker {
+	public Connection makeNewConnection() throws ClassNotFoundException, SQLException {
 		// Driver properties for DB Connection of 'N' company
 		final String driver = "oracle.jdbc.OracleDriver";
 		final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		final String DBid = "n";
-		final String DBpw = "n";
-		
+		final String DBid = "roha";
+		final String DBpw = "roha";
+				
 		Class.forName(driver);
 		Connection c = DriverManager.getConnection(url, DBid, DBpw);
-		
-		// something more code..
-		
+			
 		return c;
 	}
-
 }

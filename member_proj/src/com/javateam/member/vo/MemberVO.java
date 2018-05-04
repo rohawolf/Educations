@@ -6,6 +6,7 @@ package com.javateam.member.vo;
 import java.util.Date;
 
 /**
+ * VO : Entity
  * @author Roha Park
  *
  */

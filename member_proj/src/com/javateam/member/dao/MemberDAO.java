@@ -6,11 +6,12 @@ package com.javateam.member.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 import com.javateam.member.vo.MemberVO;
 
 /**
- * DAO (Data Access Object) : CRUD methods
+ * DAO (Data Access Object) : CRUD methods ( + connection & return resources)
  * @author Roha Park
  *
  */
@@ -18,7 +19,7 @@ public interface MemberDAO {
 	// Singleton Pattern : for Security
 	// MemberDAO dao = MemberDAOImpl.getInstance();
 	
-	// DB connection & close => 향후 분리
+	// DB connection & close => Later, it would be separated.
 	/**
 	 * connect DB
 	 * @return DB Connection Object
@@ -36,6 +37,8 @@ public interface MemberDAO {
 	void close(ResultSet rs,
 			   PreparedStatement pstmt,
 			   Connection con) throws Exception;
+	
+	// CRUD methods
 	/**
 	 * insert member informations ( CRUD - C : create)
 	 * @param member	member information object ( MemberVO instance)
@@ -44,10 +47,32 @@ public interface MemberDAO {
 	void insertMember(MemberVO member) throws Exception;
 	
 	/**
-	 * modify & update member informations ( CRUD - U : Update)
+	 * get 'all' informations of members (CRUD - R : Read)
+	 * @return List<MemberVO>
+	 * @throws Exception
+	 */
+	List<MemberVO> getAllMembers() throws Exception;
+	
+	/**
+	 * get 'a' informations of member (CRUD - R : Read)
+	 * @param id        	id (primary key of member table)
+	 * @return MemberVO		the instance of the member which has id as parameter 'id'		
+	 * @throws Exception
+	 */
+	MemberVO getMember(String id) throws Exception;
+	
+	/**
+	 * modify & update member informations (CRUD - U : Update)
 	 * @param member	member information object ( MemberVO instance)
 	 * @throws Exception
 	 */
 	void updateMember(MemberVO member) throws Exception;
+	
+	/**
+	 * delete the member which has id as parameter 'id' (CRUD - D : Delete)
+	 * @param id			id (primary key of member table)
+	 * @throws Exception
+	 */
+	void deleteMember(String id) throws Exception;
 	
 }

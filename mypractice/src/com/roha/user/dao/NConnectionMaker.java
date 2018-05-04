@@ -8,15 +8,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * ex) the 'D' company implements ConnectionMaker interface 
+ * ex) the 'N' company implements ConnectionMaker interface 
  * @author Roha Park
  *
  */
-public class DConnectionMaker implements ConnectionMaker {
+public class NConnectionMaker implements ConnectionMaker {
 	
 	@Override
 	public Connection makeConnection() throws ClassNotFoundException, SQLException {
-		// Driver properties for DB Connection of 'D' company
+		// Driver properties for DB Connection of 'N' company
 		final String driver = "oracle.jdbc.OracleDriver";
 		final String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		final String DBid = "roha";
@@ -25,7 +25,7 @@ public class DConnectionMaker implements ConnectionMaker {
 		Class.forName(driver);
 		Connection c = DriverManager.getConnection(url, DBid, DBpw);
 		
-		// something other codes of 'D' company	
+		// something other codes of 'N' company	
 		
 		return c;
 	}

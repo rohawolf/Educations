@@ -16,9 +16,11 @@ import com.roha.user.domain.User;
  */
 public class UserDao {	
 	private ConnectionMaker connectionMaker;
-	public UserDao() {
-		connectionMaker = new DConnectionMaker();
+	
+	public UserDao(ConnectionMaker connectionMaker) {
+		this.connectionMaker = connectionMaker;
 	}
+	
 	public void add(User user) throws ClassNotFoundException, SQLException {		
 		Connection c = connectionMaker.makeConnection();
 		PreparedStatement ps = c.prepareStatement(
@@ -51,23 +53,6 @@ public class UserDao {
 		c.close();
 		
 		return user;
-	}
-	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
- 		UserDao dao = new UserDao();
- 		
- 		User user = new User();
- 		user.setId("rohawolf");
- 		user.setName("Roha Park");
- 		user.setPassword("roharoha");
- 		
- 		dao.add(user);
-		System.out.println(user.getId() + " add success");
- 		
- 		User user2 = dao.get(user.getId());
- 		System.out.println(user2.getName());
- 		System.out.println(user2.getPassword());
-		System.out.println(user2.getId() + " select success");
- 	}
+	}	
 }
 

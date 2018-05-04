@@ -46,7 +46,7 @@ public final class MemberDAOImpl implements MemberDAO {
 	 * @see com.javateam.member.dao.MemberDAO#connect()
 	 */
 	@Override
-	public Connection connect() throws Exception {
+	public Connection connect() { //throws Exception {
 		
 		//Driver properties
 		final String driver = "oracle.jdbc.OracleDriver";			//JDBC Driver for Oracle
@@ -54,7 +54,13 @@ public final class MemberDAOImpl implements MemberDAO {
 		final String userid = "oraclejava";
 		final String userpw = "oraclejava";
 				
-		Connection con = null;
+		Connection con = null;	//initializing
+		
+		try {
+			Class.forName(driver);	//search for JDBC Driver for Oracle
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}		
 		
 		return con;
 	}

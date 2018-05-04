@@ -11,22 +11,52 @@ import java.util.List;
 import com.javateam.member.vo.MemberVO;
 
 /**
+ * DAO implementation class
  * @author Roha Park
  *
  */
-public class MemberDAOImpl implements MemberDAO {
+public final class MemberDAOImpl implements MemberDAO {	
+	
+	// Singleton Pattern : for Security.
+	// to make instance 'ONCE'.
+	// ex) MemberDAO dao = MemberDAOImpl.getInstance();
+	
+	private MemberDAOImpl() {}	
+	// way 1.
+	// high multi-Threading cost..
+	/*
+	private static MemberDAOImpl instance = null;
+	public final static MemberDAOImpl getInstance() {
+		if (instance == null) {
+			instance = new MemberDAOImpl();
+		}
+		return instance;
+	}
+	*/
+	// way 2.
+	private static class Singleton {
+		private static final MemberDAOImpl instance = new MemberDAOImpl();		
+		public static MemberDAOImpl getInstance() {
+			return Singleton.instance;
+		}
+	}
 	
 	
-	
-	//Singleton Pattern : for Security.
-
 	/* (non-Javadoc)
 	 * @see com.javateam.member.dao.MemberDAO#connect()
 	 */
 	@Override
 	public Connection connect() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		//Driver properties
+		final String driver = "oracle.jdbc.OracleDriver";			//JDBC Driver for Oracle
+		final String url = "jdbc:oracle:thin:@localhost:1521:xe";	//Connection URL
+		final String userid = "oraclejava";
+		final String userpw = "oraclejava";
+				
+		Connection con = null;
+		
+		return con;
 	}
 
 	/* (non-Javadoc)

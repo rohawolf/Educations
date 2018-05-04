@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import com.roha.user.dao.ConnectionMaker;
 import com.roha.user.dao.DConnectionMaker;
+import com.roha.user.dao.DaoFactory;
 import com.roha.user.dao.NConnectionMaker;
 import com.roha.user.dao.UserDao;
 import com.roha.user.domain.User;
@@ -21,17 +22,10 @@ public class UserDaoTest {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {	
+		 		
+ 		UserDao dao = new DaoFactory().userDao();
 		
-		//when using connectionMaker of 'D' company
-		ConnectionMaker connectionMaker = new DConnectionMaker();
-		
-		
-		//when using connectionMaker of 'N' company
-		//ConnectionMaker connectionMaker = new NConnectionMaker();
-		
-		UserDao dao = new UserDao(connectionMaker); 		
- 		
  		User user = new User();
  		user.setId("rohawolf");
  		user.setName("Roha Park");

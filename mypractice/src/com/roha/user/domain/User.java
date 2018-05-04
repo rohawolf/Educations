@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.roha.domain;
+package com.roha.user.domain;
 
 /**
  * @author Roha Park

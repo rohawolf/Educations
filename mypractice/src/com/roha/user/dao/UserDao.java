@@ -4,7 +4,7 @@
 package com.roha.user.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+//import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,18 +15,7 @@ import com.roha.user.domain.User;
  * @author Roha Park
  *
  */
-public class UserDao {
-	private Connection getConnection() throws ClassNotFoundException, SQLException {
-		// Driver properties for DB Connection
-		final String driver = "oracle.jdbc.OracleDriver";
-		final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		final String DBid = "roha";
-		final String DBpw = "roha";
-		
-		Class.forName(driver);
-		Connection c = DriverManager.getConnection(url, DBid, DBpw);
-		return c;
-	}
+public abstract class UserDao {	
 	public void add(User user) throws ClassNotFoundException, SQLException {		
 		Connection c = getConnection();
 		PreparedStatement ps = c.prepareStatement(
@@ -61,21 +50,6 @@ public class UserDao {
 		return user;
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		UserDao dao = new UserDao();
-		
-		User user = new User();
-		user.setId("rohawolf");
-		user.setName("Roha Park");
-		user.setPassword("roharoha");
-		
-		dao.add(user);		
-		System.out.println(user.getId() + " add success");
-		
-		User user2 = dao.get(user.getId());
-		System.out.println(user2.getName());
-		System.out.println(user2.getPassword());
-		System.out.println(user2.getId() + " select success");
-	}
-	
+	public abstract Connection getConnection() throws ClassNotFoundException, SQLException;	
 }
+

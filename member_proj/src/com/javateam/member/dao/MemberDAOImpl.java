@@ -37,11 +37,11 @@ public final class MemberDAOImpl implements MemberDAO {
 	*/
 	// way 2.
 	private static class Singleton {
-		private static final MemberDAOImpl instance = new MemberDAOImpl();		
-		public static MemberDAOImpl getInstance() {
-			return Singleton.instance;
-		}
-	}	
+		private final static MemberDAOImpl instance = new MemberDAOImpl();		
+	}
+	public static MemberDAOImpl getInstance() {
+		return Singleton.instance;
+	}
 	
 	/* (non-Javadoc)
 	 * @see com.javateam.member.dao.MemberDAO#connect()

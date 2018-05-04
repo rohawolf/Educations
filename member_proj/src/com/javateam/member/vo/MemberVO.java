@@ -42,15 +42,13 @@ public class MemberVO {
 	 * @param pw		password
 	 * @param name		name
 	 * @param address	address
-	 * @param joindate	join date
 	 */
-	public MemberVO(String id, String pw, String name, String address, Date joindate) {
+	public MemberVO(String id, String pw, String name, String address) {
 		super();
 		this.id = id;
 		this.pw = pw;
 		this.name = name;
 		this.address = address;
-		this.joindate = joindate;
 	}
 
 	/**

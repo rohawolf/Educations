@@ -3,20 +3,23 @@
  */
 package com.roha.user.dao;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 /**
  * the Factory class that has responsablity of make instance of UserDao class
  * @author Roha Park
  *
  */
+@Configuration
 public class DaoFactory {
-	public UserDao userDao() {
-		//when using connectionMaker of 'D' company
-		ConnectionMaker connectionMaker = new DConnectionMaker();		
-		
-		//when using connectionMaker of 'N' company
-		//ConnectionMaker connectionMaker = new NConnectionMaker();
-		
-		UserDao userDao = new UserDao(connectionMaker);
-		return userDao;
+	@Bean
+	public UserDao userDao() {		
+		return new UserDao(connectionMaker());
+	}
+	
+	@Bean
+	public ConnectionMaker connectionMaker() {
+		return new DConnectionMaker();
 	}
 }

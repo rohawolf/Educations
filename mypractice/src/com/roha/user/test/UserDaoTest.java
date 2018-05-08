@@ -5,10 +5,10 @@ package com.roha.user.test;
 
 import java.sql.SQLException;
 
-import com.roha.user.dao.ConnectionMaker;
-import com.roha.user.dao.DConnectionMaker;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import com.roha.user.dao.DaoFactory;
-import com.roha.user.dao.NConnectionMaker;
 import com.roha.user.dao.UserDao;
 import com.roha.user.domain.User;
 
@@ -23,8 +23,11 @@ public class UserDaoTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {	
-		 		
- 		UserDao dao = new DaoFactory().userDao();
+		
+		ApplicationContext context = 
+				new AnnotationConfigApplicationContext(DaoFactory.class);
+		
+ 		UserDao dao = context.getBean("userDao", UserDao.class);
 		
  		User user = new User();
  		user.setId("rohawolf");

@@ -150,14 +150,42 @@ public final class MemberDAOImpl implements MemberDAO {
 			// 4. make ResultSet instance
 		ResultSet rs = null;
 		try {
-			// 5.  execute SQL query
-			pstmt = con.prepareStatement(sql);			
+			// 5. SQL query parsing 
+			pstmt = con.prepareStatement(sql);
+			
+			// 6. execute SQL query & get ResultSet
+			rs = pstmt.executeQuery();
+			 
+			// 7. get infomations to members
+			/*
+			 * 	1) 1 row = 1 MemberVO
+			 * 
+			 */
+			while (rs.next()) {
+				MemberVO member = new MemberVO();
+				
+				member.setId(rs.getString("id"));
+				member.setPw(rs.getString("pw"));
+				member.setName(rs.getString("name"));
+				member.setAddress(rs.getString("address"));
+				member.setJoindate(rs.getDate("joindate"));
+				
+				// OR
+				/*
+				 * MemberVO memeber = new MemberVO(rs.getString("id"),
+				 * 								   rs.getString("pw"),
+				 * 								   rs.getString("name"),
+				 * 								   rs.getString("address"),
+				 * 								   rs.getDate("joindate") );
+				 */
+				members.add(member);
+			}
 			
 		} catch (SQLException e) {			
 			System.out.println("Error in getAllMembers() : ");
 			e.printStackTrace();			
 		} finally {
-			// 7. close all resources
+			// 8. close all resources
 			this.close(rs, pstmt, con);
 		}
 		return members;
@@ -168,8 +196,46 @@ public final class MemberDAOImpl implements MemberDAO {
 	 */
 	@Override
 	public MemberVO getMember(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+			// 1. create return object & connect DB
+		MemberVO member = new MemberVO();
+		Connection con = this.connect();
+		
+			// 2. construct SQL query
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM member ")
+		   .append("where id = ? ");
+				
+			// 3. make instance executing SQL query
+		PreparedStatement pstmt = null;
+		
+			// 4. make ResultSet instance
+		ResultSet rs = null;
+		try {
+			// 5. SQL query parsing & set parameters of SQL query
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, id);
+			
+			// 6. execute SQL query & get ResultSet
+			rs = pstmt.executeQuery();
+			 
+			// 7. get infomations to members
+			
+			if (rs.next()) {
+				member.setId(rs.getString("id"));
+				member.setPw(rs.getString("pw"));
+				member.setName(rs.getString("name"));
+				member.setAddress(rs.getString("address"));
+				member.setJoindate(rs.getDate("joindate"));
+			}
+			
+		} catch (SQLException e) {			
+			System.out.println("Error in getMember() : ");
+			e.printStackTrace();			
+		} finally {
+			// 8. close all resources
+			this.close(rs, pstmt, con);
+		}
+		return member;
 	}
 
 	/* (non-Javadoc)
@@ -228,5 +294,45 @@ public final class MemberDAOImpl implements MemberDAO {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see com.javateam.member.dao.MemberDAO#isMember(java.lang.String)
+	 */
+	@Override
+	public boolean isMember(String id) throws Exception {
+			// 1. make result object & connect DB
+		boolean result = false;
+		Connection con = this.connect();
+		
+			// 2. construct SQL query
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM member ")
+		   .append("WHERE id = ?");
+		
+			// 3. make instance executing SQL query
+		PreparedStatement pstmt = null;
+		
+			// 4. make ResultSet instance
+		ResultSet rs = null;
+		try {
+			// 5. SQL query parsing & set parameters of SQL query
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, id);
+			
+			// 6. execute SQL query & get ResultSet
+			rs = pstmt.executeQuery();
+			
+			// 7. get result whether the member exists or not.
+			result = rs.next(); // if exists, return true
+			
+		} catch(SQLException e) {
+			System.out.println("Error in isMember() : ");
+			e.printStackTrace();
+		} finally {
+			this.close(rs, pstmt, con);
+		}
+		return result;
+	}
+	
+	
 }

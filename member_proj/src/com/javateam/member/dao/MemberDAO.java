@@ -75,4 +75,12 @@ public interface MemberDAO {
 	 */
 	void deleteMember(String id) throws Exception;
 	
+	/**
+	 * check whether the member who has id as the value of String parameter exists. 
+	 * @param id
+	 * @return boolean
+	 * @throws Exception
+	 */
+	boolean isMember(String id) throws Exception;
+	
 }

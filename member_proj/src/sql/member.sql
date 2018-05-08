@@ -15,6 +15,10 @@ CREATE
 
 insert into member values 
 	('oj1234', '12345678', '홍길동', '서울 구로구 구로동', sysdate);
+insert into member values 
+	('abc123', '12341234', '배수지', '서울 마포구 상암동', sysdate);
+insert into member values 
+	('def456', '11111111', '한가인', '서울 영등포구 여의도동', sysdate);
 
 update member 
    set address='서울 구로구 대림동',

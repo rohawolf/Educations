@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.javateam.member.vo.MemberVO;
@@ -95,14 +96,15 @@ public final class MemberDAOImpl implements MemberDAO {
 		Connection con = this.connect();
 		
 			// 2. construct SQL query
-		String sql = "INSERT INTO member "
-				+ 	 "VALUES(?, ?, ?, ?, SYSDATE)";
+		StringBuilder sql = new StringBuilder("");
+		sql.append("INSERT INTO member ")
+		   .append("VALUES(?, ?, ?, ?, SYSDATE)");
 				
 			// 3. make instance executing SQL query
 		PreparedStatement pstmt = null;		
 		try {
 			// 4. SQL query parsing
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(sql.toString());
 			
 			// 5. set parameters of SQL query
 			pstmt.setString(1, member.getId());
@@ -118,7 +120,7 @@ public final class MemberDAOImpl implements MemberDAO {
 				System.out.println("Thank you for join us, " + member.getId() + "!");
 			} else {
 				// no row updated.
-				System.out.println("fail to join.");
+				System.out.println("fail to join.");				
 			}
 			
 		} catch (SQLException e) {			
@@ -135,8 +137,30 @@ public final class MemberDAOImpl implements MemberDAO {
 	 */
 	@Override
 	public List<MemberVO> getAllMembers() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+			// 1. create return object & connect DB
+		List<MemberVO> members = new ArrayList<>();
+		Connection con = this.connect();
+		
+			// 2. construct SQL query
+		String sql = "SELECT * FROM member" ;
+				
+			// 3. make instance executing SQL query
+		PreparedStatement pstmt = null;
+		
+			// 4. make ResultSet instance
+		ResultSet rs = null;
+		try {
+			// 5.  execute SQL query
+			pstmt = con.prepareStatement(sql);			
+			
+		} catch (SQLException e) {			
+			System.out.println("Error in getAllMembers() : ");
+			e.printStackTrace();			
+		} finally {
+			// 7. close all resources
+			this.close(rs, pstmt, con);
+		}
+		return members;
 	}
 
 	/* (non-Javadoc)
@@ -152,9 +176,48 @@ public final class MemberDAOImpl implements MemberDAO {
 	 * @see com.javateam.member.dao.MemberDAO#updateMember(com.javateam.member.vo.MemberVO)
 	 */
 	@Override
-	public void updateMember(MemberVO member) throws Exception {
-		// TODO Auto-generated method stub
-
+	public void updateMember(MemberVO member) { //throws Exception {
+			// 1. connect DB
+		Connection con = this.connect();
+		
+			// 2. construct SQL query
+		StringBuilder sql = new StringBuilder("");
+		sql.append("UPDATE member SET ")
+		   .append("pw = ?, ")
+		   .append("name = ?, ")
+		   .append("address = ? ")
+		   .append("WHERE id = ?");
+		
+			// 3. make instance executing SQL query
+		PreparedStatement pstmt = null;		
+		try {
+			// 4. SQL query parsing
+			pstmt = con.prepareStatement(sql.toString());
+			
+			// 5. set parameters of SQL query
+			pstmt.setString(1, member.getPw());
+			pstmt.setString(2, member.getName());
+			pstmt.setString(3, member.getAddress());
+			pstmt.setString(4, member.getId());
+			
+			// 6. execute SQL query, messaging
+			// int executeUpdate() : return the row count which had been updated.
+			//					 	 In this time, it should be 1.
+			if (pstmt.executeUpdate() == 1) {
+				// update success. (1 row updated.)
+				System.out.println("Update Successful!");
+			} else {
+				// no row updated.
+				System.out.println("fail to update.");
+			}
+			
+		} catch (SQLException e) {	
+			System.out.println("Error in updateMember() : ");
+			e.printStackTrace();			
+		} finally {
+			// 7. close all resources
+			this.close(null, pstmt, con);
+		}			
 	}
 
 	/* (non-Javadoc)

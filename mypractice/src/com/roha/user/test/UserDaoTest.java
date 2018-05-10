@@ -10,7 +10,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import com.roha.user.dao.DaoFactory;
 import com.roha.user.dao.UserDao;
-import com.roha.user.domain.User;
 
 /**
  * UserDao Unit Test class

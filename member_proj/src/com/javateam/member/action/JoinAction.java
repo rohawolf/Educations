@@ -50,28 +50,26 @@ public class JoinAction extends HttpServlet {
 		//response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");			
 		
+		MemberDAO dao = MemberDAOImpl.getInstance();
+		MemberVO member = new MemberVO();
+		
+		member.setId(request.getParameter("id"));
+		member.setPw(request.getParameter("pw"));
+		member.setName(request.getParameter("name"));
+		member.setAddress(request.getParameter("address"));
+		
+		request.setAttribute("member", member);
+		
 		if( this.hasErrors(request) ) {
 			request.getRequestDispatcher("insertMember.jsp").forward(request, response);
 		}
-		else {
-			request.getRequestDispatcher("viewMember.jsp").forward(request, response);		
-			
-			MemberDAO dao = MemberDAOImpl.getInstance();
-			try {
-				//dao.insertMember(new MemberVO(id, pw, name, address));
-				//or
-				MemberVO member = new MemberVO();
-				member.setId(request.getParameter("id"));
-				member.setPw(request.getParameter("pw"));
-				member.setName(request.getParameter("name"));
-				member.setAddress(request.getParameter("address"));
-				
-				//dao.insertMember(member);
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
+		else {			
+			try {				
+				//dao.insertMember(member);				
+			} catch (Exception e) {				
 				e.printStackTrace();
-			}
+			}			
+			request.getRequestDispatcher("viewMember.jsp").forward(request, response);			
 		}
 					
 	}
@@ -82,22 +80,21 @@ public class JoinAction extends HttpServlet {
 	private boolean hasErrors(final HttpServletRequest request) {
 		boolean flag = false;
 		
-		String id = request.getParameter("id") == null ? "" : request.getParameter("id");
-		String pw = request.getParameter("pw") == null ? "" : request.getParameter("pw");
-		String name = request.getParameter("name") == null ? "" : request.getParameter("name");
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		String name = request.getParameter("name");		
 		
 		String id_msg = "";
 		String pw_msg = "";
 		String name_msg = "";
 		
-		if ( !RegexUtil.isValidRegex("[a-zA-Z]{1}.\\w{7,19}",id) ) {
+		if ( !RegexUtil.isValidRegex("[a-zA-Z]{1}\\w{7,19}", id) ) {
 			/*
 			 	1. 아이디 정규표현식 점검
  					1) 길이(length) : 8~20
  					2) 첫자 제한: alphabet(영문)으로 시작
  					3) 한글 입력 제한 : 불가.
- 					4) 제약조건 : 영문자 및 숫자만을 허용
-			 
+ 					4) 제약조건 : 영문자 및 숫자만을 허용			 
 			 */
 			if ( id.equals("") )	id_msg = "\t- 아이디 입력 누락!";	
 			else					id_msg = "\t- 잘못된 아이디를 입력했습니다!";
@@ -113,7 +110,7 @@ public class JoinAction extends HttpServlet {
 					4) 대문자 1개 이상 포함 : (?=.*[A-Z])
 					5) 소문자 1개 이상 포함 : (?=.*[a-z])
 			 */
-			if ( id.equals("") )	pw_msg = "\t- 패스워드 입력 누락!";	
+			if ( pw.equals("") )	pw_msg = "\t- 패스워드 입력 누락!";	
 			else					pw_msg = "\t- 잘못된 패스워드를 입력했습니다!"	;
 			flag = true;
 		}
@@ -124,7 +121,7 @@ public class JoinAction extends HttpServlet {
 			 		1) 한글 - '가 ~ 힣' 사이의 글자 2 ~ 20 자
 			 		2) 알파벳 - 20글자 + 공백 + 20글자 형태
 			 */
-			if ( id.equals("") )	name_msg = "\t- 이름 입력 누락!";	
+			if ( name.equals("") )	name_msg = "\t- 이름 입력 누락!";	
 			else					name_msg = "\t- 잘못된 이름을 입력했습니다!";
 			flag = true;
 		}

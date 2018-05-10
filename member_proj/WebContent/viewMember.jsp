@@ -13,8 +13,7 @@
 				padding: 20px;
 				margin: 50px auto;				
 				width: 80%;
-			}			
-			
+			}
 			
 			input[type=text],
 			input[type=password] {
@@ -22,21 +21,9 @@
 				padding: 12px 12px;
 				margin: 8px 0;
 				display: inline-block;
-				border: 1px solid #ccc;
+				border: 2px solid gray;
 				border-radius: 4px;
 				box-sizing: border-box;
-			}
-			
-			input[type=submit],
-			input[type=reset] {
-				width : 200px;
-				background-color: #4CAF50;
-				color: white;
-				padding: 14px 20px;
-				margin: 8px 8px 0 8px;
-				border: none;
-				border-radius: 4px;
-				cursor: pointer;
 			}
 		</style>
 	</head>
@@ -49,16 +36,16 @@
 					name="id" 
 					size="25"
 					readonly 
-					value="${param.id}"/>
+					value="${member.id}"/>
 			<br><br>
 												  
 			<label for="pw">패스워드</label>
-			<input	type="text" 
+			<input	type="password" 
 					id="pw" 
 					name="pw" 
 					size="25"
 					readonly 
-					value="${param.pw}"/>
+					value="${member.pw}"/>
 			<br><br>
 			
 			<label for="name">이름</label>
@@ -67,7 +54,7 @@
 					name="name" 
 					size="25"
 					readonly 
-					value="${param.name}"/>
+					value="${member.name}"/>
 			<br><br>
 			
 			<label for="address">주소</label> 
@@ -76,7 +63,16 @@
 					name="address" 
 					size="100"
 					readonly 
-					value="${param.address}"/>	
+					value="${member.address}"/>	
+			<br><br>
+			
+			<label for="joindate">가입일</label> 
+			<input	type="text" 
+					id="joindate" 
+					name="joindate" 
+					size="100"
+					readonly 
+					value="${member.joindate}"/>	
 			<br><br>											
 			
 		</div>

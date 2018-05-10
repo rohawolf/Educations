@@ -3,40 +3,18 @@
  */
 package com.javateam.member.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.List;
 
 import com.javateam.member.vo.MemberVO;
 
 /**
- * DAO (Data Access Object) : CRUD methods ( + connection & return resources)
+ * DAO (Data Access Object) : CRUD methods
  * @author Roha Park
  *
  */
 public interface MemberDAO {
 	// Singleton Pattern : for Security
 	// MemberDAO dao = MemberDAOImpl.getInstance();
-	
-	// DB connection & close => Later, it would be separated.
-	/**
-	 * connect DB
-	 * @return DB Connection Object
-	 * @throws Exception
-	 */
-	Connection connect() throws Exception;
-	
-	/**
-	 * disconnect DB & return resources
-	 * @param rs		DB query result Set object
-	 * @param pstmt		DB query object
-	 * @param con		DB connection object
-	 * @throws Exception
-	 */
-	void close(ResultSet rs,
-			   PreparedStatement pstmt,
-			   Connection con) throws Exception;
 	
 	// CRUD methods
 	/**

@@ -4,13 +4,13 @@
 package com.javateam.member.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.javateam.member.util.DBUtil;
 import com.javateam.member.vo.MemberVO;
 
 /**
@@ -42,50 +42,7 @@ public final class MemberDAOImpl implements MemberDAO {
 	}
 	public static MemberDAOImpl getInstance() {
 		return Singleton.instance;
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.javateam.member.dao.MemberDAO#connect()
-	 */
-	@Override
-	public Connection connect() { //throws Exception {
-		// JDBC direct connecting
-		//  Driver properties for Connection instance
-		final String driver = "oracle.jdbc.OracleDriver";			//JDBC Driver for Oracle
-		final String url = "jdbc:oracle:thin:@localhost:1521:xe";	//Connection URL
-		final String user = "oraclejava";
-		final String password = "oraclejava";
-				
-		Connection con = null;	//initializing
-		
-		try {			
-			Class.forName(driver);	//search for JDBC Driver for Oracle
-			con = DriverManager.getConnection(url, user, password);			
-		} 
-		catch (ClassNotFoundException | SQLException e) {
-			// NOTICE! : JDK 1.7 over only
-			System.out.println("Error in connect() : ");
-			e.printStackTrace();
-		}		
-		return con;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.javateam.member.dao.MemberDAO#close(java.sql.ResultSet, java.sql.PreparedStatement, java.sql.Connection)
-	 */
-	@Override
-	public void close(ResultSet rs, 
-					  PreparedStatement pstmt, 
-					  Connection con) { //throws Exception {		
-			try {				
-				if(rs != null)		rs.close();
-				if(pstmt != null)	pstmt.close();
-				if(con != null)		con.close();
-			} catch (SQLException e) {
-				System.out.println("Error in close() : ");
-				e.printStackTrace();
-			}
-	}
+	}	
 
 	/**
 	 * @see com.javateam.member.dao.MemberDAO#insertMember(com.javateam.member.vo.MemberVO)
@@ -93,7 +50,7 @@ public final class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void insertMember(MemberVO member) throws Exception {
 			// 1. connect DB
-		Connection con = this.connect();
+		Connection con = DBUtil.connect("jdbc/oraclejava");
 		
 			// 2. construct SQL query
 		StringBuilder sql = new StringBuilder("");
@@ -136,7 +93,7 @@ public final class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();			
 		} finally {
 			// 7. close all resources
-			this.close(rs, pstmt, con);
+			DBUtil.close(rs, pstmt, con);
 		}			
 	}
 
@@ -147,7 +104,7 @@ public final class MemberDAOImpl implements MemberDAO {
 	public List<MemberVO> getAllMembers() throws Exception {
 			// 1. create return object & connect DB
 		List<MemberVO> members = new ArrayList<>();
-		Connection con = this.connect();
+		Connection con = DBUtil.connect("jdbc/oraclejava");
 		
 			// 2. construct SQL query
 		String sql = "SELECT * FROM member" ;
@@ -201,7 +158,7 @@ public final class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();			
 		} finally {
 			// 8. close all resources
-			this.close(rs, pstmt, con);
+			DBUtil.close(rs, pstmt, con);
 		}
 		return members;
 	}
@@ -213,7 +170,7 @@ public final class MemberDAOImpl implements MemberDAO {
 	public MemberVO getMember(String id) throws Exception {
 			// 1. create return object & connect DB
 		MemberVO member = new MemberVO();
-		Connection con = this.connect();
+		Connection con = DBUtil.connect("jdbc/oraclejava");
 		
 			// 2. construct SQL query
 		StringBuilder sql = new StringBuilder();
@@ -255,7 +212,7 @@ public final class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();			
 		} finally {
 			// 8. close all resources
-			this.close(rs, pstmt, con);
+			DBUtil.close(rs, pstmt, con);
 		}
 		return member;
 	}
@@ -266,7 +223,7 @@ public final class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void updateMember(MemberVO member) throws Exception {
 			// 1. connect DB
-		Connection con = this.connect();
+		Connection con = DBUtil.connect("jdbc/oraclejava");
 		
 			// 2. construct SQL query
 		StringBuilder sql = new StringBuilder("");
@@ -312,7 +269,7 @@ public final class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();			
 		} finally {
 			// 7. close all resources
-			this.close(rs, pstmt, con);
+			DBUtil.close(rs, pstmt, con);
 		}			
 	}
 
@@ -322,7 +279,7 @@ public final class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void deleteMember(String id) throws Exception {
 			// 1. connect DB
-		Connection con = this.connect();
+		Connection con = DBUtil.connect("jdbc/oraclejava");
 		
 			// 2. construct SQL query
 		StringBuilder sql = new StringBuilder("");
@@ -362,7 +319,7 @@ public final class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();			
 		} finally {
 			// 7. close all resources
-			this.close(rs, pstmt, con);
+			DBUtil.close(rs, pstmt, con);
 		}				
 	}
 	
@@ -373,7 +330,7 @@ public final class MemberDAOImpl implements MemberDAO {
 	public boolean isMember(String id) throws Exception {
 			// 1. make result object & connect DB
 		boolean result = false;
-		Connection con = this.connect();
+		Connection con = DBUtil.connect("jdbc/oraclejava");
 		
 			// 2. construct SQL query
 		StringBuilder sql = new StringBuilder();
@@ -407,7 +364,7 @@ public final class MemberDAOImpl implements MemberDAO {
 			System.out.println("Error in isMember() : ");
 			e.printStackTrace();
 		} finally {
-			this.close(rs, pstmt, con);
+			DBUtil.close(rs, pstmt, con);
 		}
 		return result;
 	}

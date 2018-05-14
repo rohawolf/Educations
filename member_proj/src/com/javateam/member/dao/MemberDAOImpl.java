@@ -368,6 +368,66 @@ public final class MemberDAOImpl implements MemberDAO {
 		}
 		return result;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.javateam.member.dao.MemberDAO#hasMember(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public String hasMember(String id, String pw) throws Exception {
+		String msg = "";
+		Connection con = DBUtil.connect("jdbc/oraclejava");
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT id, pw FROM member ")
+		   .append("WHERE id = ?");
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con.setAutoCommit(false);
+			
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			/*
+			 * id만 인자로 받아  ResultSet으로 id, pw만 받아온다.
+			 * 
+			 * 1. id X, (사실 id가 없으면 pw는 관계 없다.)
+			 * 	=> rs.next() = false;
+			 *  => "존재하지 않는 아이디입니다."
+			 * 2. id O, pw X
+			 *  => rs.next() = true, rs.getString("pw).equals(pw) = false;
+			 *  => "패스워드가 틀렸습니다.
+			 * 3. id O, pw O
+			 *  => rs.next() = true, rs.getString("pw).equals(pw) = true;
+			 *  => " 'id'
+			 */			
+			
+			if (!rs.next()) { 
+				msg = "존재하지 않는 ID입니다.";				
+			} else {
+				if (!rs.getString("pw").equals(pw)) {
+					msg = "패스워드가 틀렸습니다.";
+				} else {
+					msg = rs.getString(id);
+				}
+			}
+			con.commit();	
+			
+		} catch(SQLException e) {
+			con.rollback();
+			System.out.println("Error in hasMember() : ");
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs, pstmt, con);
+		}
+		
+		return msg;
+	}
+	
+
 	
 	
 }

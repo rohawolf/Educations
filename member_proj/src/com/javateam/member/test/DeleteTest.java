@@ -21,8 +21,13 @@ public class DeleteTest {
 		// 1. get DAO instance
 		MemberDAO dao = MemberDAOImpl.getInstance();
 		
-		// 2. call deleteMember() method
-		dao.deleteMember("guro1234");
+		// 2. check there is member who has id as parameter.
+		dao.hasMember("abc456", "123123");	// id doesn't exists.
+		dao.hasMember("abc123", "123123");	// id exists, but wrong pw.
+		dao.hasMember("abc123", "1234"); 	// id, pw are all correct.
+		
+		// 3. call deleteMember() method
+		//dao.deleteMember("guro1234");
 	}
 
 }

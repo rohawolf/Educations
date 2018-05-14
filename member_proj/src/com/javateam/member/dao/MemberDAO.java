@@ -61,4 +61,13 @@ public interface MemberDAO {
 	 */
 	boolean isMember(String id) throws Exception;
 	
+	/**
+	 * check whether the input data is a member or not
+	 * @param id
+	 * @param pw
+	 * @return
+	 * @throws Exception
+	 */
+	String hasMember(String id, String pw) throws Exception;
+	
 }

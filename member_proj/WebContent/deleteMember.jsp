@@ -58,8 +58,8 @@
 	
 	<body>
 		<div class="container">
-			<form	name="delete" 
-					method="POST"
+			<form	name="deleteForm" 
+					method="post"
 					action="delete.do">
 			
 				<label for="id">아이디</label>
@@ -67,7 +67,8 @@
 						id="id" 
 						name="id" 
 						size="25"
-						maxlength="20"  />
+						maxlength="20" 
+						value="${param.id}" />
 				<span class="err_msg">${id_msg}</span><br><br>
 													  
 				<label for="pw">패스워드</label>

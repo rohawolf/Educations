@@ -1,9 +1,7 @@
 package com.javateam.member.action;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -60,12 +58,17 @@ public class JoinAction extends HttpServlet {
 		
 		request.setAttribute("member", member);
 		
-		if( this.hasErrors(request) ) {
+		if (this.hasErrors(request)) {
+			try {
+				if (dao.isMember(request.getParameter("id"))) request.setAttribute("id_msg", " - 이미 존재하는 ID입니다.");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			request.getRequestDispatcher("insertMember.jsp").forward(request, response);
 		}
 		else {			
 			try {				
-				//dao.insertMember(member);				
+				dao.insertMember(member);				
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}			
@@ -99,7 +102,7 @@ public class JoinAction extends HttpServlet {
 			if ( id.equals("") )	id_msg = "\t- 아이디 입력 누락!";	
 			else					id_msg = "\t- 잘못된 아이디를 입력했습니다!";
 			flag = true;
-		}
+		}		
 		
 		if ( !RegexUtil.isValidRegex("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).{8,20}", pw) ) {
 			/*

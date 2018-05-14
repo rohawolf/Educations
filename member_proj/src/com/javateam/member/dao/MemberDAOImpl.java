@@ -411,7 +411,7 @@ public final class MemberDAOImpl implements MemberDAO {
 				if (!rs.getString("pw").equals(pw)) {
 					msg = "패스워드가 틀렸습니다.";
 				} else {
-					msg = rs.getString(id);
+					msg = "회원입니다.";
 				}
 			}
 			con.commit();	

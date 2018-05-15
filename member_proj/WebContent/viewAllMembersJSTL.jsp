@@ -1,7 +1,7 @@
 <%@ page	contentType="text/html; charset=UTF-8"
     		pageEncoding="UTF-8"%>
 <%@ taglib	prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib	prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -11,8 +11,10 @@
 		<title>전체 회원 현황</title>
 		<style type="text/css">
 			* { font-size: 9pt;}
-			#members {
-				width: 80%;
+			table {
+				width: 75%;
+				margin: 10px auto;
+				border: 1px solid gray;
 			}
 		</style>	
 	</head>
@@ -21,12 +23,12 @@
 		<table id="members">
 		
 			<colgroup>
-				<col width="3%">
+				<col width="5%">
+				<col width="12%">
 				<col width="12%">
 				<col width="15%">
-				<col width="15%">
-				<col width="30%">
-				<col width="10%">
+				<col width="25%">
+				<col width="16%">
 				<col width="15%">
 			</colgroup>
 			
@@ -50,7 +52,11 @@
 				<td>${member.pw}</td>
 				<td>${member.name}</td>
 				<td>${member.address}</td>
-				<td>${member.joindate}</td>
+				<td>
+					<fmt:formatDate value="${member.joindate}" 
+								    type="date"
+								    pattern="yyyy년  M월 d일" />		
+				</td>
 				<td>
 					<input type="button" value="수정" />&nbsp;
 					<input type="button" value="삭제" />				

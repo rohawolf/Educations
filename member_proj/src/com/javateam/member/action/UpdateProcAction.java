@@ -90,7 +90,7 @@ public class UpdateProcAction extends HttpServlet {
            
             // 신규 패쓰워드/확인 동일성 여부
             if (!newPw.equals(newPw2)) {
-                req.setAttribute("pw_msg", "신규 패쓰워드가 일치하지 않습니다.");// 회원가입 페이지로 돌아감(forward)
+                req.setAttribute("pw_msg", "신규 패스워드가 일치하지 않습니다.");// 회원가입 페이지로 돌아감(forward)
                 flag--;
             } else {
                 flag++;
